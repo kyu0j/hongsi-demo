@@ -1,0 +1,101 @@
+import type { AccountPreferences, ActiveLecture, AttendanceCourse, AttendanceReceipt, CalendarData, CalendarItem, Course, MealDay, SeatsData, Timetable, Todo, SeatSession, Attachment, SubmissionJob } from '../src/shared/types';
+
+import { PUBLIC_URLS } from './links';
+
+export const classroomUrl = (path: string) => `${PUBLIC_URLS.HONGSI_CLASSROOM_URL}${path}`;
+
+export const PROFILE = { name: '사용자1', studentId: 'DEMO', department: '학과1', hasPicture: false };
+export const seconds = () => Math.floor(Date.now() / 1000);
+export function today() { return new Date(Date.now() + 9 * 3600_000).toISOString().slice(0, 10); }
+export function dayAt(offset: number, hour = 23, minute = 59) {
+  return Math.floor(Date.parse(`${today()}T00:00:00+09:00`) / 1000) + offset * 86400 + hour * 3600 + minute * 60;
+}
+const date = new Date(Date.now() + 9 * 3600_000);
+export const currentTerm = { year: date.getUTCFullYear(), semester: date.getUTCMonth() < 6 ? 10 : 20 };
+const previousTerm = currentTerm.semester === 10 ? { year: currentTerm.year - 1, semester: 20 } : { year: currentTerm.year, semester: 10 };
+export const courses: Course[] = Array.from({ length: 8 }, (_, i) => ({ id: i + 1, name: i < 6 ? `과목${i + 1}` : `지난 학기 과목${i - 5}`, code: `DEMO-${i + 1}`, term: i < 6 ? currentTerm : previousTerm }));
+export const currentCourses = courses.filter(c => c.term === currentTerm);
+export const activeLecture = (): ActiveLecture => ({ key: `demo-attendance-${today()}`, name: courses[0].name, code: courses[0].code, time: '10:00' });
+export const finished = (i: CalendarItem) => i.status === 'submitted' || i.status === 'done';
+export const sampleFile = (name: string): Attachment => ({ name, size: 128, mime: 'text/plain' });
+export function calendarSeed(): CalendarData {
+  const items: CalendarItem[] = [];
+  const offsets = [0, 1, 2, 3, 5, 7, -1, -3, 0, 10, 14, null];
+  offsets.forEach((offset, index) => {
+    const n = index + 1, submitted = [3, 9].includes(n);
+    const due = offset === null ? null : dayAt(offset);
+    const status = submitted ? 'submitted' : offset !== null && offset < 0 ? 'overdue' : 'not_submitted';
+    items.push({ key: `assign:${n}`, kind: 'assignment', courseId: index % 6 + 1, title: `과제${n}`,
+      start: dayAt(-7, 9, 0), due, status, done: submitted, doneOverride: null, alert: true, alertLeads: null,
+      url: classroomUrl(`/mod/assign/view.php?id=${n}`), introHtml: `<p>과목${index % 6 + 1}의 과제${n} 안내입니다.</p><p>첨부된 안내 자료를 확인하고 파일을 제출해 보세요. 데모에서 선택한 파일은 서버로 전송되지 않습니다.</p>`,
+      attachments: [sampleFile(`과제${n}_안내.txt`)], watch: null, lateUntil: due === null ? null : due + 7 * 86400,
+      modified: seconds() - 3600, firstSeen: null, firstDue: null, firstIntroHtml: null, changeCount: 0,
+      submit: { files: true, maxFiles: 3, maxBytes: 20 * 1024 * 1024, text: false, drafts: false, statement: n === 4 } });
+  });
+  [0, 1, 2, 4, 6, 9, -2, 12].forEach((offset, index) => {
+    const n = index + 1, status = n === 3 ? 'done' : n === 2 ? 'partial' : offset < 0 ? 'missed' : n === 8 ? 'upcoming' : 'todo';
+    items.push({ key: `vod:${n}`, kind: 'vod', courseId: index % 6 + 1, title: `강의${n}`,
+      start: dayAt(n === 8 ? 5 : -3, 9, 0), due: dayAt(offset), status, done: status === 'done', doneOverride: null, alert: true, alertLeads: null,
+      url: classroomUrl(`/mod/vod/view.php?id=${n}`), introHtml: `<p>과목${index % 6 + 1}의 강의${n}입니다.</p><p>시청 시간과 이수 상태를 보여 주는 가상 강의입니다.</p>`,
+      attachments: [], watch: { required: '30분', watched: status === 'done' ? '30분' : status === 'partial' ? '12분' : '0분', mark: status === 'done' ? '출석' : '' },
+      lateUntil: null, modified: null, firstSeen: null, firstDue: null, firstIntroHtml: null, changeCount: 0, submit: null });
+  });
+  items.push({ ...items[0], key: 'assign:101', courseId: 7, title: '지난 학기 과제', due: dayAt(-100), start: dayAt(-110), status: 'submitted', done: true, url: classroomUrl('/mod/assign/view.php?id=101'), lateUntil: dayAt(-99), attachments: [] });
+  return { courses, items, fetchedAt: seconds(), archiveUpdatedAt: seconds(), semesterDisplay: 'all', currentTerm };
+}
+export function todoSeed(): Todo[] {
+  return [0, 1, 3, -1].map((offset, i) => ({ id: i + 1, title: `할 일${i + 1}`, note: `할 일${i + 1}의 메모입니다. 자유롭게 수정해 보세요.`,
+    courseId: i === 1 ? 1 : null, parentKey: i === 1 ? 'assign:1' : null, due: dayAt(offset + 1, 0, 0), allDay: true, doneAt: null, notify: true, alertLeads: null }));
+}
+export function timetableSeed(): Timetable {
+  const weekday = (new Date(Date.now() + 9 * 3600_000).getUTCDay() + 6) % 7;
+  return { slots: currentCourses.filter(c => c.id !== 5).flatMap((c, i) => [{ code: c.code, name: c.name, weekday: i === 0 ? weekday : (weekday + Math.floor(i / 2)) % 5,
+    start: `${10 + i % 3 * 2}:00`, periods: [2 + i % 3 * 2, 3 + i % 3 * 2], room: `강의실${i + 1}` }]) };
+}
+export function attendanceSeed(): AttendanceCourse[] {
+  return currentCourses.map((c, i) => {
+    const cyber = c.id === 5;
+    const weeks: AttendanceCourse['weeks'] = Array.from({ length: 15 }, (_, w) => ({ week: w + 1,
+      sessions: Array.from({ length: cyber ? [7, 14].includes(w) ? 0 : 3 : 2 }, (_, s) => {
+        const end = dayAt((w - 4) * 7 + (cyber ? 2 : -1));
+        const date = new Date(end * 1000 + 9 * 3600_000);
+        const kind = cyber
+          ? w > 4 ? 'planned' : w === 4 ? 'none' : w === 2 && s === 2 ? 'absent' : w === 1 && s === 2 ? 'late' : 'present'
+          : w > 3 ? 'planned' : w === 2 && i === 1 ? 'absent' : w === 1 && s === 0 && i === 2 ? 'late' : 'present';
+        return { date: `${date.getUTCMonth() + 1}/${date.getUTCDate()}`, kind,
+          mark: { planned: '예정', none: '', absent: '결석', late: '지각', present: '출석' }[kind] };
+      }) }));
+    const summary = { present: 0, late: 0, absent: 0, excused: 0, none: 0, planned: 0 };
+    for (const w of weeks) for (const s of w.sessions) if (s.kind !== 'other') summary[s.kind]++;
+    if (i === 5) return { cyber, code: c.code!, name: c.name, published: false, notice: '출석부가 공개되지 않았어요.', weeks: [], summary: { present: 0, late: 0, absent: 0, excused: 0, none: 0, planned: 0 } };
+    return { cyber, code: c.code!, name: c.name, published: true, notice: null, weeks, summary };
+  });
+}
+export function seatsSeed(): SeatsData {
+  return { fetchedAt: seconds(), watching: true, buildings: ['T', 'G', 'R'].map((id, b) => ({ id, name: `건물${b + 1}`,
+    rooms: Array.from({ length: 3 }, (_, r) => {
+      const grid = Array.from({ length: 8 }, (_, row) => Array.from({ length: 12 }, (_, col) => {
+        if (col === 5 || col === 6) return null;
+        const no = row * 10 + (col < 5 ? col : col - 2) + 1;
+        return { no, state: (no + b + r) % 13 === 0 ? 'blocked' : (no + b * 3 + r) % 4 === 0 ? 'used' : 'free' } as const;
+      }));
+      const cells = grid.flat().filter(c => c !== null);
+      return { no: r + 1, name: `제${r + 1}열람실`, grid, total: cells.length, used: cells.filter(c => c.state === 'used').length, free: cells.filter(c => c.state === 'free').length };
+    }) })) };
+}
+export function mealsSeed(): MealDay[] {
+  const weekday = (new Date(Date.now() + 9 * 3600_000).getUTCDay() + 6) % 7;
+  return Array.from({ length: 5 }, (_, i) => {
+    const at = new Date(dayAt(i - weekday, 12, 0) * 1000 + 9 * 3600_000);
+    return { date: at.toISOString().slice(0, 10), weekday: ['일', '월', '화', '수', '목', '금', '토'][at.getUTCDay()],
+      places: [1, 2].map(p => ({ name: p === 1 ? '기숙사식당1' : '교직원식당2', meals: ['아침', '점심A', '점심B', '저녁'].map((name, m) => ({ name,
+        start: m === 0 ? '08:00' : m === 3 ? '17:00' : '11:30', end: m === 0 ? '09:00' : m === 3 ? '19:00' : '14:00',
+        price: p === 1 ? '5,800원' : '9,000원', items: Array.from({ length: 6 }, (_, n) => `메뉴${p}-${m + 1}-${n + 1}`) })) })) };
+  });
+}
+export type DemoData = { version: 4; hour: number; day: string; calendar: CalendarData; timetable: Timetable; revisions: Record<string, number>; todos: Todo[]; attendance: AttendanceCourse[]; receipts: AttendanceReceipt[]; preferences: AccountPreferences; attended: boolean; seat: SeatSession | null; seen: string[]; submissions: Record<string, Attachment[]>; jobs: Record<string, SubmissionJob> };
+export function seed(): DemoData {
+  return { version: 4, hour: Math.floor(Date.now() / 3_600_000), day: today(), calendar: calendarSeed(), timetable: timetableSeed(), revisions: Object.fromEntries(['calendar', 'archive', 'timetable', 'notices', 'preferences', 'items', 'todos', 'seat'].map(kind => [kind, 1])), todos: todoSeed(), attendance: attendanceSeed(), receipts: [],
+    preferences: { mealPlace: 'dorm', timetableDisplay: 'fit', semesterDisplay: 'current', alertLeads: [60], midnight: 'prev', showUndatedAssignments: false, updatedAt: 0 }, attended: false, seat: null, seen: [], jobs: {},
+    submissions: { '3': [sampleFile('과제3_제출.txt')], '9': [sampleFile('과제9_제출.txt')] } };
+}
