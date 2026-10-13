@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.vercel/
+.env
+.env.*
+.DS_Store
+*.log
+.playwright-cli/
+.vercel-cache/
+.vercel
+.env*
+!.env.example

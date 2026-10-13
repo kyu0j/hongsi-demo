@@ -1,0 +1,101 @@
+name: Sync main and deploy demo
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  repository_dispatch:
+    types: [upstream-main-push]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: hongsi-demo-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      HONGSI_API_URL: ${{ secrets.HONGSI_API_URL }}
+      HONGSI_REPO_URL: ${{ secrets.HONGSI_REPO_URL }}
+      HONGSI_SUPPORT_URL: ${{ secrets.HONGSI_SUPPORT_URL }}
+      HONGSI_DEMO_URL: ${{ secrets.HONGSI_DEMO_URL }}
+      HONGSI_CLASSROOM_URL: ${{ secrets.HONGSI_CLASSROOM_URL }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Check build configuration
+        run: node config/env.mjs --check-build
+      - name: Sync original frontend
+        id: sync
+        env:
+          TRIGGER: ${{ github.event_name }}
+        run: |
+          npm run sync
+          if git diff --quiet && [[ "$TRIGGER" != "push" && "$TRIGGER" != "workflow_dispatch" ]]; then
+            echo "deploy=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Check deployment secrets
+        if: steps.sync.outputs.deploy == 'true'
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          for key in VERCEL_TOKEN VERCEL_ORG_ID VERCEL_PROJECT_ID; do
+            if [[ -z "${!key}" ]]; then
+              echo "::error::Missing GitHub Actions secret: $key"
+              exit 1
+            fi
+          done
+      - name: Set up pnpm
+        if: steps.sync.outputs.deploy == 'true'
+        uses: pnpm/action-setup@v6
+        with:
+          package_json_file: app/package.json
+      - name: Install frontend dependencies
+        if: steps.sync.outputs.deploy == 'true'
+        run: pnpm --dir app install --frozen-lockfile
+      - name: Install Vercel CLI
+        if: steps.sync.outputs.deploy == 'true'
+        run: npm install --global vercel@62.1.0
+      - name: Pull Vercel project settings
+        if: steps.sync.outputs.deploy == 'true'
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+      - name: Check and build deployment
+        if: steps.sync.outputs.deploy == 'true'
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: vercel build --prod --token="$VERCEL_TOKEN"
+      - name: Deploy to production
+        if: steps.sync.outputs.deploy == 'true'
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+      - name: Record deployed upstream commit
+        if: steps.sync.outputs.deploy == 'true'
+        run: |
+          git add README.md RELEASE_NOTES.md docs LICENSE app/src app/public app/package.json app/index.html app/tsconfig.json app/svelte.config.js app/pnpm-lock.yaml upstream.json
+          if ! git diff --cached --quiet; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m 'chore: sync frontend from hongsi main'
+            git push origin HEAD:main
+          fi
