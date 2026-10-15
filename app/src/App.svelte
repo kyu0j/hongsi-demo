@@ -6,6 +6,7 @@
   import { publishWidgetTheme, publishWidgets, widgetSnapshot, openWidgetIntent } from './platform/widgets';
   import AppUpdate from './features/updates/AppUpdate.svelte';
   import NotificationPermission from './features/notifications/NotificationPermission.svelte';
+  import PermissionsIntro from './features/permissions/PermissionsIntro.svelte';
   import DoneConfirm from './features/calendar/DoneConfirm.svelte';
   import DownloadPage from './pages/DownloadPage.svelte';
   import { ApiError, api, isApp, native } from './shared/api/api';
@@ -14,7 +15,7 @@
   import { errorText } from './shared/api/net.svelte';
   import { syncSeatReminders } from './features/seats/seat.svelte';
   import { syncDueReminders } from './features/notifications/reminders';
-  import { initNotifications, notificationState, refreshNotifications, showFirstNotificationPermission, takeNotificationIntent } from './features/notifications/notify';
+  import { initNotifications, notificationState, refreshNotifications, takeNotificationIntent } from './features/notifications/notify';
   import { enableBackgroundByDefault, refreshBackground, syncBackgroundPreferences } from './features/notifications/background.svelte';
   import { openNotification } from './features/notifications/notification-navigation';
   import { seatPrefs } from './features/seats/seat.svelte';
@@ -23,6 +24,7 @@
   import { app, endSession, logoutSession, startSession } from './features/auth/auth-state.svelte';
   import { calendar, ensureCalendarArchive, refreshCurrentCalendar } from './features/calendar/calendar-resources.svelte';
   import { lectures, timetable, refreshTimetableForTerm } from './features/attendance/attendance-resources.svelte';
+  import { watchAttendanceReceipts } from './features/attendance/classwatch.svelte';
   import { seatSession } from './features/seats/seat-resources.svelte';
   import { todos } from './features/calendar/todo-resource.svelte';
   import { TABS, go, openSeats, route, toast } from './shared/state/ui.svelte';
@@ -97,7 +99,7 @@
     try {
       const r = await api.me();
       const remembered = isApp ? await native.autoLoginEnabled().catch(() => false) : r.remembered;
-      startSession(r.profile, remembered);
+      startSession(r.profile, remembered, { restore: !isApp });
       bootError = '';
     } catch (e) {
       if (e instanceof ApiError && e.status === 401) {
@@ -124,8 +126,6 @@
       .then((fn) => { if (disposed) fn(); else cleanup = fn; });
     void bootReady.then(async () => {
       await notificationReady;
-      if (disposed) return;
-      await showFirstNotificationPermission();
       if (!disposed && app.profile && !app.loggingOut) await refreshBackground();
     });
     return () => { disposed = true; cleanup(); stopUpdates(); stopClock(); };
@@ -143,7 +143,7 @@
     const refresh = async (force = true) => {
       if (app.loggingOut || document.visibilityState !== 'visible' || Date.now() - last < 30_000) return;
       last = Date.now();
-      await Promise.all([refreshCurrentCalendar(force), todos.load(true), seatSession.load(true)]);
+      await Promise.all([refreshCurrentCalendar(force), seatSession.load(true)]);
       await refreshNotifications();
       await refreshBackground();
     };
@@ -188,7 +188,8 @@
     if (!app.account || app.loggingOut) return;
     return untrack(() => {
       const stopCalendar = watchCalendarState();
-      return () => { stopCalendar(); };
+      const stopAttendance = watchAttendanceReceipts();
+      return () => { stopCalendar(); stopAttendance(); };
     });
   });
 
@@ -334,6 +335,7 @@
     </nav>
   </div>
   <ProfileSheet bind:open={profileOpen} onlogout={() => logout('device')} onlogoutall={() => logout('all')} ondeletedata={() => logout('delete')} />
+  <PermissionsIntro />
   <DoneConfirm />
 
   {/key}
