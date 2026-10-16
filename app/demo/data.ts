@@ -27,7 +27,7 @@ export function calendarSeed(): CalendarData {
     const status = submitted ? 'submitted' : offset !== null && offset < 0 ? 'overdue' : 'not_submitted';
     items.push({ key: `assign:${n}`, kind: 'assignment', courseId: index % 6 + 1, title: `과제${n}`,
       start: dayAt(-7, 9, 0), due, status, done: submitted, doneOverride: null, alert: true, alertLeads: null,
-      url: classroomUrl(`/mod/assign/view.php?id=${n}`), introHtml: `<p>과목${index % 6 + 1}의 과제${n} 안내입니다.</p><p>첨부된 안내 자료를 확인하고 파일을 제출해 보세요. 데모에서 선택한 파일은 서버로 전송되지 않습니다.</p>`,
+      introHtml: `<p>과목${index % 6 + 1}의 과제${n} 안내입니다.</p><p>첨부된 안내 자료를 확인하고 파일을 제출해 보세요. 데모에서 선택한 파일은 서버로 전송되지 않습니다.</p>`,
       attachments: [sampleFile(`과제${n}_안내.txt`)], watch: null, lateUntil: due === null ? null : due + 7 * 86400,
       modified: seconds() - 3600, firstSeen: null, firstDue: null, firstIntroHtml: null, changeCount: 0,
       submit: { files: true, maxFiles: 3, maxBytes: 20 * 1024 * 1024, text: false, drafts: false, statement: n === 4 } });
@@ -36,11 +36,11 @@ export function calendarSeed(): CalendarData {
     const n = index + 1, status = n === 3 ? 'done' : n === 2 ? 'partial' : offset < 0 ? 'missed' : n === 8 ? 'upcoming' : 'todo';
     items.push({ key: `vod:${n}`, kind: 'vod', courseId: index % 6 + 1, title: `강의${n}`,
       start: dayAt(n === 8 ? 5 : -3, 9, 0), due: dayAt(offset), status, done: status === 'done', doneOverride: null, alert: true, alertLeads: null,
-      url: classroomUrl(`/mod/vod/view.php?id=${n}`), introHtml: `<p>과목${index % 6 + 1}의 강의${n}입니다.</p><p>시청 시간과 이수 상태를 보여 주는 가상 강의입니다.</p>`,
+      introHtml: `<p>과목${index % 6 + 1}의 강의${n}입니다.</p><p>시청 시간과 이수 상태를 보여 주는 가상 강의입니다.</p>`,
       attachments: [], watch: { required: '30분', watched: status === 'done' ? '30분' : status === 'partial' ? '12분' : '0분', mark: status === 'done' ? '출석' : '' },
       lateUntil: null, modified: null, firstSeen: null, firstDue: null, firstIntroHtml: null, changeCount: 0, submit: null });
   });
-  items.push({ ...items[0], key: 'assign:101', courseId: 7, title: '지난 학기 과제', due: dayAt(-100), start: dayAt(-110), status: 'submitted', done: true, url: classroomUrl('/mod/assign/view.php?id=101'), lateUntil: dayAt(-99), attachments: [] });
+  items.push({ ...items[0], key: 'assign:101', courseId: 7, title: '지난 학기 과제', due: dayAt(-100), start: dayAt(-110), status: 'submitted', done: true, lateUntil: dayAt(-99), attachments: [] });
   return { courses, items, fetchedAt: seconds(), archiveUpdatedAt: seconds(), semesterDisplay: 'all', currentTerm };
 }
 export function todoSeed(): Todo[] {
