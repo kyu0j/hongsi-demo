@@ -365,7 +365,8 @@ a.btn {
   transition: background 0.15s;
 }
 
-.icon-btn:hover {
+.icon-btn:not(.press-feedback):hover,
+.press-feedback[data-pressed] {
   background: var(--surface-3);
 }
 
@@ -501,7 +502,7 @@ a.btn {
   font-size: 15px;
 }
 
-.spin {
+.spin > svg {
   animation: spin 0.9s linear infinite;
 }
 

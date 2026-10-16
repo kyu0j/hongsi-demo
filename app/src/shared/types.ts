@@ -74,7 +74,6 @@ export type CalendarItem = {
   doneOverride: boolean | null;
   alert: boolean;
   alertLeads: number[] | null;
-  url: string;
   introHtml: string | null;
   attachments: Attachment[];
   watch: { required: string | null; watched: string | null; mark: string | null } | null;
@@ -184,6 +183,8 @@ export type Todo = {
   alertLeads: number[] | null;
 };
 export type TodoInput = Omit<Todo, 'id' | 'doneAt' | 'due'> & { due: number };
+
+export type SavedDownload = { path: string; name: string };
 
 export type DownloadRecord = {
   id: string;
