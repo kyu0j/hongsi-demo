@@ -4,7 +4,7 @@ import { readFileSync, writeFileSync, mkdirSync, rmSync, mkdtempSync, readdirSyn
 import { dirname, join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { tmpdir } from 'node:os';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { repositoryName } from '../config/env.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -13,13 +13,27 @@ const repository = `https://github.com/${repositoryName()}.git`;
 const branch = 'main';
 const fixed = ['README.md', 'RELEASE_NOTES.md', 'LICENSE', 'app/index.html', 'app/tsconfig.json', 'app/svelte.config.js', 'app/pnpm-lock.yaml'];
 const trees = ['app/src', 'app/public', 'docs'];
-const owned = (path) => fixed.includes(path) || path === 'app/package.json' || trees.some(tree => path.startsWith(`${tree}/`));
+const dependencyFile = 'app/demo/dependency-info.js';
+const owned = (path) => path === dependencyFile || fixed.includes(path) || path === 'app/package.json' || trees.some(tree => path.startsWith(`${tree}/`));
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
 const git = (cwd, ...args) => execFileSync('git', args, { cwd, maxBuffer: 32 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] });
 const write = (path, content) => { mkdirSync(dirname(join(root, path)), { recursive: true }); writeFileSync(join(root, path), content); };
 function walk(path, base = root) {
   if (!lstatSync(join(base, path)).isDirectory()) throw new Error(`허용하지 않는 원본 폴더: ${path}`);
   return readdirSync(join(base, path), { withFileTypes: true }).flatMap(entry => entry.isDirectory() ? walk(`${path}/${entry.name}`, base) : [`${path}/${entry.name}`]);
+}
+async function dependencyModule(source, commit, workingTree) {
+  const temp = mkdtempSync(join(tmpdir(), 'hongsi-dependencies-'));
+  const generator = 'app/scripts/dependency-info.mjs';
+  try {
+    for (const path of [generator, 'app/package.json', 'Cargo.lock', 'app/src-tauri/gen/android/app/build.gradle.kts']) {
+      const target = join(temp, path);
+      mkdirSync(dirname(target), { recursive: true });
+      writeFileSync(target, workingTree ? readFileSync(join(source, path)) : git(source, 'show', `${commit}:${path}`));
+    }
+    const module = await import(pathToFileURL(join(temp, generator)).href);
+    return Buffer.from(`${module.dependencyModule()}\n`);
+  } finally { rmSync(temp, { recursive: true, force: true }); }
 }
 function verify(manifest) {
   if (!/^[a-f0-9]{64}$/.test(manifest.repositoryHash ?? '') || manifest.branch !== branch || !/^[a-f0-9]{40}$/.test(manifest.commit)) throw new Error('upstream.json의 원본 정보가 올바르지 않습니다.');
@@ -70,6 +84,7 @@ if (options.check) {
     pkg.engines = { ...pkg.engines, node: '24.x' };
     pkg.scripts = { dev: 'vite --port 5174', check: 'svelte-check --tsconfig ./tsconfig.demo.json', build: 'vite build', preview: 'vite preview --host 127.0.0.1 --port 5274' };
     files.set('app/package.json', Buffer.from(`${JSON.stringify(pkg, null, 2)}\n`));
+    files.set(dependencyFile, await dependencyModule(source, commit, options['working-tree']));
     for (const tree of trees) rmSync(join(root, tree), { recursive: true, force: true });
     for (const [path, bytes] of files) write(path, bytes);
     write('upstream.json', `${JSON.stringify({ repositoryHash: digest(repository.toLowerCase()), branch, commit, ...(options['working-tree'] ? { workingTree: true } : {}), files: Object.fromEntries([...files].sort(([a], [b]) => a.localeCompare(b)).map(([path, bytes]) => [path, digest(bytes)])) }, null, 2)}\n`);

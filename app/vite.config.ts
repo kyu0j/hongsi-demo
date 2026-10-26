@@ -17,6 +17,10 @@ export default defineConfig({
     configureServer(server) {
       server.middlewares.use('/api', (_req, res) => { res.statusCode = 404; res.setHeader('Content-Type', 'application/json'); res.end(JSON.stringify({ error: { code: 'demo_only', message: '데모 API는 브라우저 안에서만 실행됩니다.' } })); });
     },
+  }, {
+    name: 'hongsi-demo-dependency-info',
+    resolveId(id) { if (id === 'virtual:dependency-info') return '\0virtual:dependency-info'; },
+    load(id) { if (id === '\0virtual:dependency-info') return readFileSync(new URL('./demo/dependency-info.js', import.meta.url), 'utf8'); },
   }, svelte()],
   clearScreen: false,
   define: { __APP_VERSION__: JSON.stringify(pkg.version), __APP_COMMIT__: JSON.stringify(upstream.commit), __PUBLIC_URLS__: JSON.stringify(publicUrls()) },
