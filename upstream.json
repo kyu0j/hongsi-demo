@@ -1,7 +1,7 @@
 {
   "repositoryHash": "a29aaa830cd266b200ce004ff3a099162a0eefc9aa7512010977b6a03de30a5f",
   "branch": "main",
-  "commit": "5d7ca57756bb476225bb062ad2d24fc1f93a628a",
+  "commit": "a84ca5642c28714acbe369129e47be542d66b749",
   "files": {
     "app/demo/dependency-info.js": "f2529576047a8ef72664caaf5a06ac57f60c454ca462e4ef10cfd41cb190f711",
     "app/index.html": "b5ee0f58c350620accc3313a605acd57e7088e5d5296440eeaf7192aef0bcf4b",
@@ -24,7 +24,7 @@
     "app/src/features/attendance/CurrentAttendance.svelte": "aaac21ba05d7f82098256fdde54a6658a0953100c043cf494485b05212bd03ef",
     "app/src/features/attendance/WeekTimetable.svelte": "b0ab8854d891555fcd80ad70944ea29e599dc05b8f060338a0de40543fadc595",
     "app/src/features/auth/auth-state.svelte.ts": "d69e0949fdf5098b9f75ae0620e3a4aa55c7ef6620c682c137d431b48bb5adc1",
-    "app/src/features/calendar/actions.svelte.ts": "0dccdae520da74d924f6822cca4f5a0d15e5a587a0cc43c0f0afb53b6cd9faaf",
+    "app/src/features/calendar/actions.svelte.ts": "848bd40e927f1d77e4cb9e0523da8f01acba011afccb1f82a4f761295b9e642c",
     "app/src/features/calendar/agenda.ts": "3fba67e2b9ec975b6752e5b71e874e68a73ee90f24114dde857f2077e2e34436",
     "app/src/features/calendar/AgendaItem.svelte": "771256b1f63375e39e20c8854172defd816a14adc1b40fd8b70949afee9b00fc",
     "app/src/features/calendar/calendar-data.ts": "02855055539e7275e8cb7acd925d732a5fa3580e7e5a3e12c71972a6b4a583c4",
@@ -43,7 +43,7 @@
     "app/src/features/calendar/todo-resource.svelte.ts": "37c9a2a41db702948d0a5e6ab0f66ebcd52638df66e2983aaa886c6139741299",
     "app/src/features/calendar/TodoRow.svelte": "132dd2fc28ff492e08a0e6461a810d6d4359e6f203edcf3b9cb926ac85b2d454",
     "app/src/features/calendar/todos.svelte.ts": "36cebeabc2eb59d0ed57fd68694f263243daa9d2db99e1b87045a2001dee8bf2",
-    "app/src/features/calendar/TodoSheet.svelte": "a294bd3277f7e547e6743cb499bb8d1c5fdc85600e51d3be1c9332afee719b97",
+    "app/src/features/calendar/TodoSheet.svelte": "e2a2b66f11ed222965d6f9c6a281093fe76a69b6de16c7de4440fe8ccfa2bfb9",
     "app/src/features/calendar/TodoTimeField.svelte": "c039352423f589f6ad586a158ca5e89a32bdd26e6f0fec482926f3151d8c68b5",
     "app/src/features/campus-map/campus-data.json": "40b603aa4f372fb3582c03c0a94102d2c56d97eac2f753787f5d9cbbd46e66d0",
     "app/src/features/campus-map/campus-data.ts": "578293e7d23ecd17dbc15f1402a77959c2fb3e7be0ff5a796ac3161792be020b",
@@ -163,6 +163,6 @@
     "docs/user-guide.md": "c86aa52cb330e83debc54d25e0124e58c2faf06d5c7d5a1c9ae7a68283632e39",
     "LICENSE": "d8a6cc31abc16b6748c7a21f21611f5a1ec33f67d22ca23d7da1c19b95496bee",
     "README.md": "0796e1791a008acd4230615092ba154beda57ef821c9f35d87cce96a7735d4fb",
-    "RELEASE_NOTES.md": "dd125c7529dc87a1a61a25d45f8aedcd999a3fb8301395fc0e848ba049b54ab7"
+    "RELEASE_NOTES.md": "26782fcc4b2a19ca10a3307175781636e94f37519904fa124e381a7c67689c0b"
   }
 }
