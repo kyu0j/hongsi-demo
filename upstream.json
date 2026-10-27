@@ -1,7 +1,7 @@
 {
   "repositoryHash": "a29aaa830cd266b200ce004ff3a099162a0eefc9aa7512010977b6a03de30a5f",
   "branch": "main",
-  "commit": "97c2a3210e1b99461a79a8c47c1c0788e49487ce",
+  "commit": "722b9bbee2c05d7c89ec08568c929aad8d579264",
   "files": {
     "app/demo/dependency-info.js": "f2529576047a8ef72664caaf5a06ac57f60c454ca462e4ef10cfd41cb190f711",
     "app/index.html": "b5ee0f58c350620accc3313a605acd57e7088e5d5296440eeaf7192aef0bcf4b",
@@ -163,6 +163,6 @@
     "docs/user-guide.md": "c86aa52cb330e83debc54d25e0124e58c2faf06d5c7d5a1c9ae7a68283632e39",
     "LICENSE": "d8a6cc31abc16b6748c7a21f21611f5a1ec33f67d22ca23d7da1c19b95496bee",
     "README.md": "0796e1791a008acd4230615092ba154beda57ef821c9f35d87cce96a7735d4fb",
-    "RELEASE_NOTES.md": "723d855bf2b73d4f5915b097a4e069f79d50d14c86dc388e7f71a1e51e5a6575"
+    "RELEASE_NOTES.md": "fb1e8bca4eaf7bb04fbd7f663bc99ea73905a12c2ab8810f096b5da948c997bd"
   }
 }
