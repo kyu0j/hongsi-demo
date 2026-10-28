@@ -1,7 +1,7 @@
 {
   "repositoryHash": "a29aaa830cd266b200ce004ff3a099162a0eefc9aa7512010977b6a03de30a5f",
   "branch": "main",
-  "commit": "722b9bbee2c05d7c89ec08568c929aad8d579264",
+  "commit": "871af861f49b2afc741843c3d5302cfbf3030428",
   "files": {
     "app/demo/dependency-info.js": "f2529576047a8ef72664caaf5a06ac57f60c454ca462e4ef10cfd41cb190f711",
     "app/index.html": "b5ee0f58c350620accc3313a605acd57e7088e5d5296440eeaf7192aef0bcf4b",
@@ -107,7 +107,7 @@
     "app/src/platform/location.ts": "0a70fc9b8a801a6d6d4c64095c0bdd0bd7297451681fcff5ca37365f30915ef6",
     "app/src/platform/map-tracking.ts": "6de40695b4e56e2a18fc49ce33b271929235c9d44d1bdc953ed82621d49e6d04",
     "app/src/platform/student-card-time.ts": "1c82d4ddf57db6de71f8e4f7df03a772aee442409e18b5eae504833c76c2bbb5",
-    "app/src/platform/widgets.ts": "b46bc95751d76e30f6c0e0c066ce8a1326a5a01d0f1815aa567317ac0ee20df6",
+    "app/src/platform/widgets.ts": "600421e963926ab9e95651d0b57ab173f8829a03d545d3a1b7f0be945e555377",
     "app/src/shared/api/api-error.ts": "043b76bdfcded73fdc9e2d206223871908e57166084fadaadddf3276d1d3e2c9",
     "app/src/shared/api/api.ts": "3392b381e32f62916113ee347dc52dba3cf3226c63359a769629c37d150d5bd9",
     "app/src/shared/api/http.ts": "b9fcba97f7823d83128fd94a2058c7a1c8520aead21391a1be803f0bfb9ae569",
@@ -136,7 +136,7 @@
     "app/src/shared/ui/Switch.svelte": "0838b5ffd676387b073569b22ce49f97fa218edaa90fc6d6655dd569430cbd1b",
     "app/src/shared/ui/TimeWheel.svelte": "a92eea51358d350d91056513735aaa227ce6ab323ccc5b67642a548b56880cf5",
     "app/src/shared/ui/Toasts.svelte": "7711a23643365cc1993896ee14d3fd82d7a7e3c19c7723da023672b5f31e8c05",
-    "app/src/shared/utils/format.ts": "63c9d63b9ad1378b16b96aabfdaf427bc12f0aea860aeb461e2f7bb7ffcecca8",
+    "app/src/shared/utils/format.ts": "58532a7a5c661d5e0bab19c99ab6b469055afe1e02859bbd158b1410e1e0df7b",
     "app/src/shared/utils/horizontal-swipe.ts": "5930353ad5b1c92fc3a13886b9034e14582a017e93e156a33a9d98e1207fe469",
     "app/src/shared/utils/html.ts": "cf844fab42dab1f617236555de09e78857bba659dd1ab9765e295cceef57ccd3",
     "app/src/shared/utils/modal-stack.ts": "54f8da4c01975bdae0b64bfc70d5065c741e4963357c2f5bfb984b4727ad87d8",
@@ -163,6 +163,6 @@
     "docs/user-guide.md": "c86aa52cb330e83debc54d25e0124e58c2faf06d5c7d5a1c9ae7a68283632e39",
     "LICENSE": "d8a6cc31abc16b6748c7a21f21611f5a1ec33f67d22ca23d7da1c19b95496bee",
     "README.md": "0796e1791a008acd4230615092ba154beda57ef821c9f35d87cce96a7735d4fb",
-    "RELEASE_NOTES.md": "fb1e8bca4eaf7bb04fbd7f663bc99ea73905a12c2ab8810f096b5da948c997bd"
+    "RELEASE_NOTES.md": "a7b47c130cb86f435c77ccea92461c5c88da162ebfe98a9ebc3a774aca2bcc74"
   }
 }
