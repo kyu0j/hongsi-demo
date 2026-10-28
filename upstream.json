@@ -1,7 +1,7 @@
 {
   "repositoryHash": "a29aaa830cd266b200ce004ff3a099162a0eefc9aa7512010977b6a03de30a5f",
   "branch": "main",
-  "commit": "871af861f49b2afc741843c3d5302cfbf3030428",
+  "commit": "225a8dd6e64e8486b5176c483e61d4a7f80cb175",
   "files": {
     "app/demo/dependency-info.js": "f2529576047a8ef72664caaf5a06ac57f60c454ca462e4ef10cfd41cb190f711",
     "app/index.html": "b5ee0f58c350620accc3313a605acd57e7088e5d5296440eeaf7192aef0bcf4b",
@@ -148,7 +148,6 @@
     "docs/features/calendar.md": "8470ba4c9948e84b69e814fa1013fa256f4a4a63626ba8c5014e852bc69e5c9b",
     "docs/features/meals.md": "7ac5cba5efe9885469d678c7f1da5d3e08179f15be4967d4eb9e09bf2fa2077b",
     "docs/features/seats.md": "2ac8722585b0117244b762d10a496ef5bf4c27905e747fc0960b9f83a248031b",
-    "docs/ios-release.md": "d7d6f1c2272a1580f39e17f92243648b487b875a7928a3d1921ad47fbd9b1312",
     "docs/screenshots/app-assignment.png": "abebe769e5d90911808a9d0ca36716f4425a0bb3539e03e9457fea6f5606bcbc",
     "docs/screenshots/app-attendance.png": "dfd111c3a509f04ca5c62a9138f881853125649c54c4c83ff148aeb9f14ab073",
     "docs/screenshots/app-calendar.png": "10d48b0450a5e0fad6db9c51941bc60503a4aded6a2b7c3af263695b7d89d8b3",
