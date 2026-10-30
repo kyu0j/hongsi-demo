@@ -1,7 +1,7 @@
 {
   "repositoryHash": "a29aaa830cd266b200ce004ff3a099162a0eefc9aa7512010977b6a03de30a5f",
   "branch": "main",
-  "commit": "225a8dd6e64e8486b5176c483e61d4a7f80cb175",
+  "commit": "9acffb8e9240b91bdd144a2f126865e69425eced",
   "files": {
     "app/demo/dependency-info.js": "f2529576047a8ef72664caaf5a06ac57f60c454ca462e4ef10cfd41cb190f711",
     "app/index.html": "b5ee0f58c350620accc3313a605acd57e7088e5d5296440eeaf7192aef0bcf4b",
@@ -96,7 +96,7 @@
     "app/src/features/updates/app-update.svelte.ts": "e84e4797f872d652b16e3ae4b7f3be63e5efed1c0849ccae5b68fd9d2a53be69",
     "app/src/features/updates/AppUpdate.svelte": "ea516bb19fde80822c02fd96d1fc55ce43cd12f0123693ea9adb16244c673c14",
     "app/src/main.ts": "acd29d8ac50a68c494942ee7b55d67b5ef03f1ac3dedf878d42ad970e3915ed0",
-    "app/src/pages/AttendancePage.svelte": "97ee9fca0f1ce0d793dad4ed761cd180439fb9dd324411d65d986e7be6b4b7e9",
+    "app/src/pages/AttendancePage.svelte": "37e551028718b9e32cbe2cea2b763d8d255da8f51c28a41c80ce84384f70e343",
     "app/src/pages/CalendarPage.svelte": "38ba7a04c7e986ebbe69541f6b92c665140ec98f891ec94ccf68b0337ed27fbc",
     "app/src/pages/DownloadPage.svelte": "13f19941e7de15cc932c05fed2e66b3d18cffe12a478e93993c9b5175d1daecc",
     "app/src/pages/Home.svelte": "a23972fd05a399e62f330498e2669d25d8dca84cfab0119c327fa6f5e2c6d3b0",
@@ -107,7 +107,7 @@
     "app/src/platform/location.ts": "0a70fc9b8a801a6d6d4c64095c0bdd0bd7297451681fcff5ca37365f30915ef6",
     "app/src/platform/map-tracking.ts": "6de40695b4e56e2a18fc49ce33b271929235c9d44d1bdc953ed82621d49e6d04",
     "app/src/platform/student-card-time.ts": "1c82d4ddf57db6de71f8e4f7df03a772aee442409e18b5eae504833c76c2bbb5",
-    "app/src/platform/widgets.ts": "600421e963926ab9e95651d0b57ab173f8829a03d545d3a1b7f0be945e555377",
+    "app/src/platform/widgets.ts": "9b7b475cc33a3a4885a2b3729a0e144df19e62eb99946e221684f043b0bdd615",
     "app/src/shared/api/api-error.ts": "043b76bdfcded73fdc9e2d206223871908e57166084fadaadddf3276d1d3e2c9",
     "app/src/shared/api/api.ts": "3392b381e32f62916113ee347dc52dba3cf3226c63359a769629c37d150d5bd9",
     "app/src/shared/api/http.ts": "b9fcba97f7823d83128fd94a2058c7a1c8520aead21391a1be803f0bfb9ae569",
@@ -118,7 +118,7 @@
     "app/src/shared/state/resource-lifecycle.ts": "035cf194846369cc3826cfaffc030efb44c7695ce2633d5eaaab8c72351c2d94",
     "app/src/shared/state/resource.svelte.ts": "3c0aa38eaf5a3700a6431fc2fe02e5a862ab186cbbd5cee4f578fd47263536ec",
     "app/src/shared/state/session.ts": "6ade889c2e660c86c815a47af8e9b6ae4f01634ed90815c7bd596d9564f3f7e8",
-    "app/src/shared/state/ui.svelte.ts": "84e1c0ca91e0fced88f3f1095b335876b458aac2b91effc5dd113ba2dc5bdd91",
+    "app/src/shared/state/ui.svelte.ts": "c407b0e914878fcb31428526cd6c6383e2db416c532cfdd661fb4dedab07f39d",
     "app/src/shared/state/visible-refresh.ts": "8155bdbad60d9b4589290dd1ed8e2757b895fbc6f98475317b615095867004f5",
     "app/src/shared/types.ts": "efcb0ae4e0c069b0dc01541894e17d972abfc7fd109fb93f7530e66a2b887956",
     "app/src/shared/ui/Avatar.svelte": "01552703cda259d105afa274ef18fb69cb40fd85396c9b493b1703d6646b9241",
@@ -162,6 +162,6 @@
     "docs/user-guide.md": "c86aa52cb330e83debc54d25e0124e58c2faf06d5c7d5a1c9ae7a68283632e39",
     "LICENSE": "d8a6cc31abc16b6748c7a21f21611f5a1ec33f67d22ca23d7da1c19b95496bee",
     "README.md": "0796e1791a008acd4230615092ba154beda57ef821c9f35d87cce96a7735d4fb",
-    "RELEASE_NOTES.md": "a7b47c130cb86f435c77ccea92461c5c88da162ebfe98a9ebc3a774aca2bcc74"
+    "RELEASE_NOTES.md": "c8127ec03f66e7488491e7171eaf5a99c799579f6f71d9a0731a63500d73125b"
   }
 }
