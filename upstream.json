@@ -1,7 +1,7 @@
 {
   "repositoryHash": "a29aaa830cd266b200ce004ff3a099162a0eefc9aa7512010977b6a03de30a5f",
   "branch": "main",
-  "commit": "9acffb8e9240b91bdd144a2f126865e69425eced",
+  "commit": "987fac3574bda8b81c4d6e6edcc00ec7e5b13cfe",
   "files": {
     "app/demo/dependency-info.js": "f2529576047a8ef72664caaf5a06ac57f60c454ca462e4ef10cfd41cb190f711",
     "app/index.html": "b5ee0f58c350620accc3313a605acd57e7088e5d5296440eeaf7192aef0bcf4b",
