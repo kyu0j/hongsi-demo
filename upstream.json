@@ -1,7 +1,7 @@
 {
   "repositoryHash": "a29aaa830cd266b200ce004ff3a099162a0eefc9aa7512010977b6a03de30a5f",
   "branch": "main",
-  "commit": "f736ec4fa3e4bfc6dd20f7703bb6d3b616a7dd50",
+  "commit": "f100aea5b09f8f38d971cc90fc37768fb1ddbffd",
   "files": {
     "app/demo/dependency-info.js": "f2529576047a8ef72664caaf5a06ac57f60c454ca462e4ef10cfd41cb190f711",
     "app/index.html": "b5ee0f58c350620accc3313a605acd57e7088e5d5296440eeaf7192aef0bcf4b",
@@ -97,7 +97,7 @@
     "app/src/features/updates/app-update.svelte.ts": "e84e4797f872d652b16e3ae4b7f3be63e5efed1c0849ccae5b68fd9d2a53be69",
     "app/src/features/updates/AppUpdate.svelte": "ea516bb19fde80822c02fd96d1fc55ce43cd12f0123693ea9adb16244c673c14",
     "app/src/main.ts": "acd29d8ac50a68c494942ee7b55d67b5ef03f1ac3dedf878d42ad970e3915ed0",
-    "app/src/pages/AttendancePage.svelte": "187b7c745c38af0c6511ee6b4f71db910e0612617b48d5b80454ecaa1ffddefb",
+    "app/src/pages/AttendancePage.svelte": "a42ec8188b7a0ff65ba4939a944f41ef575d45ec1661c6969a5c5e4f73df0b3d",
     "app/src/pages/CalendarPage.svelte": "122e5259083b8c4d3629f20300b7e82ca97ba6c05a510cdf02f2a7ae85894bef",
     "app/src/pages/DownloadPage.svelte": "d7f85e03c213af45b43810e606d1a015734b8aafb09caeb93bb9cb7495b4eb7a",
     "app/src/pages/Home.svelte": "51faa0f3fe126b478730c1b1360b4948ca16f2e6b693e5d9322f9891496c3a0e",
@@ -129,7 +129,7 @@
     "app/src/shared/ui/Icon.svelte": "572b541175410bc3c0f54aca5c94dc0a0cd9d063700e866f2b2bb884c63583b9",
     "app/src/shared/ui/LoadError.svelte": "be7199843e6f4c5e21e812535910c8c73c9e1b8434f3d3ec6c45a392bc7a9330",
     "app/src/shared/ui/MonthWheel.svelte": "d109f7f585160686e41cccf5b967ac4c560c5422034af0bd06e85d571c8f9a88",
-    "app/src/shared/ui/Popover.svelte": "4fcb99013d6680afcc68133631eabf095f0b4684ea20c200155eaecb36aef4ac",
+    "app/src/shared/ui/Popover.svelte": "db285c306e2d501ffa295096b09ab137b9a6760f32692fb7b71c9994f306cdfb",
     "app/src/shared/ui/PullRefresh.svelte": "619a0c609c9989fef0b3ffdacb56670f275701986b536dbd986cd430d3289bfe",
     "app/src/shared/ui/Ring.svelte": "243cafc8474af33876fb2f00e3e1622d71b7435c05c0d3d8bf08cca8e42dc533",
     "app/src/shared/ui/Sheet.svelte": "ad8a3e8f3ad36dc4aba5edd49b216c9dee875a009a2600c8b53df1d6a499f756",
@@ -163,6 +163,6 @@
     "docs/user-guide.md": "c86aa52cb330e83debc54d25e0124e58c2faf06d5c7d5a1c9ae7a68283632e39",
     "LICENSE": "d8a6cc31abc16b6748c7a21f21611f5a1ec33f67d22ca23d7da1c19b95496bee",
     "README.md": "0796e1791a008acd4230615092ba154beda57ef821c9f35d87cce96a7735d4fb",
-    "RELEASE_NOTES.md": "22e9adf5a424d14d83828107c87ae1184bb348a469dac189078621c794ed8652"
+    "RELEASE_NOTES.md": "2aea82a5a33a5abc50f16a5e96a777391cb7c4e5de5507cef8461519a438da1c"
   }
 }

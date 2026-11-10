@@ -93,30 +93,32 @@
   const weekLabel = (w: AttendanceWeek) =>
     `${w.week}주차: ${sessionRows(w).map((r) => `${r.date} ${r.label}${r.n > 1 ? ` ${r.n}회` : ''}`).join(', ') || '기록 없음'}`;
 
+  let weekWidths = $state<Record<string, number>>({});
+
+  function weekRows(weeks: AttendanceWeek[], width = 0): AttendanceWeek[][] {
+    if (!weeks.length) return [];
+    const capacity = width > 0 ? Math.max(1, Math.floor((width + 6) / 44)) : 8;
+    const count = Math.ceil(weeks.length / capacity);
+    let offset = 0;
+    return Array.from({ length: count }, (_, index) => {
+      const size = Math.floor(weeks.length / count) + (index < weeks.length % count ? 1 : 0);
+      const row = weeks.slice(offset, offset + size);
+      offset += size;
+      return row;
+    });
+  }
+
   const fine = new MediaQuery('(hover: hover) and (pointer: fine)');
   let tip = $state<{ el: HTMLElement; id: string; week: AttendanceWeek } | null>(null);
   let tipOpen = $state(false);
-  let leaveTimer: ReturnType<typeof setTimeout> | undefined;
 
   function showTip(el: HTMLElement, id: string, week: AttendanceWeek) {
-    clearTimeout(leaveTimer);
     tip = { el, id, week };
     tipOpen = true;
   }
 
-  function toggleTip(e: MouseEvent, id: string, week: AttendanceWeek) {
-    if (tipOpen && tip?.id === id && !fine.current) tipOpen = false;
-    else showTip(e.currentTarget as HTMLElement, id, week);
-  }
-
   function hoverTip(e: MouseEvent, id: string, week: AttendanceWeek) {
     if (fine.current) showTip(e.currentTarget as HTMLElement, id, week);
-  }
-
-  function leaveTip() {
-    if (!fine.current) return;
-    clearTimeout(leaveTimer);
-    leaveTimer = setTimeout(() => (tipOpen = false), 250);
   }
 
 </script>
@@ -197,7 +199,7 @@
   <div class="status-head" class:stack={isApp}>
     <h2>과목별 출결 현황</h2>
     <div class="legend" aria-label="출결 표시 색">
-      {#each ['present', 'late', 'absent', 'none', 'planned'] as k (k)}
+      {#each ['present', 'late', 'absent', 'excused', 'none', 'planned'] as k (k)}
         <span><i class="mark {MARK[k as MarkKind].cls}"></i>{MARK[k as MarkKind].label}</span>
       {/each}
     </div>
@@ -220,36 +222,45 @@
                 <span class="chip ok">출석 {c.summary.present}</span>
                 {#if c.summary.late}<span class="chip warn">지각 {c.summary.late}</span>{/if}
                 {#if c.summary.absent}<span class="chip danger">결석 {c.summary.absent}</span>{/if}
+                {#if c.summary.excused}<span class="chip info">공결 {c.summary.excused}</span>{/if}
                 {#if c.summary.none}<span class="chip">기록 없음 {c.summary.none}</span>{/if}
               </div>
             {/if}
           </header>
           {#if c.published}
-            <div class="weeks" role="group" aria-label="{c.name} 주차별 출결 (칸을 누르면 날짜가 보여요)">
-              {#each c.weeks as w (w.week)}
-                {@const id = `${c.code}:${w.week}`}
-                <button
-                  class="week"
-                  class:on={tipOpen && tip?.id === id}
-                  aria-label={weekLabel(w)}
-                  aria-expanded={tipOpen && tip?.id === id}
-                  onclick={(e) => toggleTip(e, id, w)}
-                  onmouseenter={(e) => hoverTip(e, id, w)}
-                  onmouseleave={leaveTip}
-                >
-                  <span class="wk">{w.week}</span>
-                  <span class="marks" aria-hidden="true">
-                    {#each w.sessions as s, i (i)}
-                      <i class="mark {MARK[s.kind].cls}"></i>
-                    {:else}
-                      <span class="empty-week">—</span>
-                    {/each}
-                  </span>
-                </button>
+            {#if c.weeks.length}
+            {@const rows = weekRows(c.weeks, weekWidths[c.code])}
+            <div class="weeks" bind:clientWidth={weekWidths[c.code]} style:--columns={rows[0]?.length ?? 1} role="group" aria-label="{c.name} 주차별 출결 (칸을 누르면 날짜가 보여요)">
+              {#each rows as row, rowIndex (rowIndex)}
+                <div class="week-row">
+                  {#each row as w (w.week)}
+                    {@const id = `${c.code}:${w.week}`}
+                    <button
+                      class="week"
+                      class:on={tipOpen && tip?.id === id}
+                      aria-label={weekLabel(w)}
+                      aria-expanded={tipOpen && tip?.id === id}
+                      onclick={(e) => showTip(e.currentTarget as HTMLElement, id, w)}
+                      onmouseenter={(e) => hoverTip(e, id, w)}
+                    >
+                      <span class="wk">{w.week}</span>
+                      <span class="marks" aria-hidden="true">
+                        {#each w.sessions as s, i (i)}
+                          <i class="mark {MARK[s.kind].cls}"></i>
+                        {:else}
+                          <span class="empty-week">—</span>
+                        {/each}
+                      </span>
+                    </button>
+                  {/each}
+                </div>
               {/each}
             </div>
+            {:else}
+              <p class="notice">출석부 데이터가 없습니다.</p>
+            {/if}
           {:else}
-            <p class="notice">{c.notice ?? '교수님이 출석부를 공개하지 않았어요.'}</p>
+            <p class="notice">{c.notice ?? '출석부가 공개되지 않았습니다.'}</p>
           {/if}
         </article>
       {/each}
@@ -257,7 +268,7 @@
   {/if}
 </div>
 
-<Popover anchor={tip?.el ?? null} bind:open={tipOpen} placement="top" role="tooltip" timeout={fine.current ? 0 : 4000}>
+<Popover anchor={tip?.el ?? null} bind:open={tipOpen} placement="top" role="tooltip" interactive>
   {#if tip}
     <div class="tip">
       <strong>{tip.week.week}주차</strong>
@@ -380,6 +391,7 @@
     position: relative;
     padding: 18px 18px 18px 20px;
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     align-content: start;
     gap: 12px;
     overflow: hidden;
@@ -416,12 +428,22 @@
 
   .weeks {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(38px, 1fr));
+    min-width: 0;
+    gap: 6px;
+  }
+
+  .week-row {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    min-width: 0;
     gap: 6px;
   }
 
   .week {
     display: grid;
+    flex: none;
+    width: min(52px, calc((100% - (var(--columns) - 1) * 6px) / var(--columns)));
     justify-items: center;
     align-content: start;
     gap: 4px;
@@ -500,6 +522,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-content: flex-start;
+    width: 30px;
     gap: 3px;
   }
 
@@ -508,6 +532,7 @@
     width: 8px;
     height: 8px;
     border-radius: 3px;
+    flex: none;
   }
 
   .mark.present {
