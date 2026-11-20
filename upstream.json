@@ -1,7 +1,7 @@
 {
   "repositoryHash": "a29aaa830cd266b200ce004ff3a099162a0eefc9aa7512010977b6a03de30a5f",
   "branch": "main",
-  "commit": "4076dfc34eafacbcb78c56ce570a56da9597b6dd",
+  "commit": "ad45d7fd1fb7b32f9d6147960434855b4489206f",
   "files": {
     "app/demo/dependency-info.js": "f2529576047a8ef72664caaf5a06ac57f60c454ca462e4ef10cfd41cb190f711",
     "app/index.html": "b5ee0f58c350620accc3313a605acd57e7088e5d5296440eeaf7192aef0bcf4b",
@@ -21,7 +21,7 @@
     "app/src/env.d.ts": "de5c627a859763d17caa6e4ec177fb5e528b72e2ef0014d563f246cd70062893",
     "app/src/features/attendance/attendance-location.svelte.ts": "481ac46e2ee7cad70aee41fef5a51bfae89b25f07e26146ee143ec1d84170dc4",
     "app/src/features/attendance/attendance-resources.svelte.ts": "c24afaf2a8b3dbb3ab1db90996a3324a5ebd4c1818df5f9c9103d1a08ae2a36c",
-    "app/src/features/attendance/classwatch.svelte.ts": "b4e1944c2bc13cc1e2b3c7ea71145dd313de0ff293a9a7ef6b8cbdbf8a8aaaea",
+    "app/src/features/attendance/classwatch.svelte.ts": "774cfd301c902034dd067ff28732501cf7b98d043ea1bcb3e67e965ed17cad3e",
     "app/src/features/attendance/CurrentAttendance.svelte": "fa6c28012d150c6816a098ee30b75580ec0c0418e1dc3f3a723d4fb05c25292e",
     "app/src/features/attendance/WeekTimetable.svelte": "f3a5f4bdf938a65f6ad3c5bc53394d5c20786dcb163a9c709076ac2ed34a53d7",
     "app/src/features/auth/auth-state.svelte.ts": "d69e0949fdf5098b9f75ae0620e3a4aa55c7ef6620c682c137d431b48bb5adc1",
@@ -163,6 +163,6 @@
     "docs/user-guide.md": "c86aa52cb330e83debc54d25e0124e58c2faf06d5c7d5a1c9ae7a68283632e39",
     "LICENSE": "d8a6cc31abc16b6748c7a21f21611f5a1ec33f67d22ca23d7da1c19b95496bee",
     "README.md": "0796e1791a008acd4230615092ba154beda57ef821c9f35d87cce96a7735d4fb",
-    "RELEASE_NOTES.md": "2aea82a5a33a5abc50f16a5e96a777391cb7c4e5de5507cef8461519a438da1c"
+    "RELEASE_NOTES.md": "07dd4e1cd192a67f4429a80dc304b032fbab8ea29dfbc529e7d411d30475cc79"
   }
 }
