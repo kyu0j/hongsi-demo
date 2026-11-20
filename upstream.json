@@ -1,7 +1,7 @@
 {
   "repositoryHash": "a29aaa830cd266b200ce004ff3a099162a0eefc9aa7512010977b6a03de30a5f",
   "branch": "main",
-  "commit": "ad45d7fd1fb7b32f9d6147960434855b4489206f",
+  "commit": "3dbbbfcb013b4f36b981e31b15f814d67521737c",
   "files": {
     "app/demo/dependency-info.js": "f2529576047a8ef72664caaf5a06ac57f60c454ca462e4ef10cfd41cb190f711",
     "app/index.html": "b5ee0f58c350620accc3313a605acd57e7088e5d5296440eeaf7192aef0bcf4b",
@@ -60,15 +60,15 @@
     "app/src/features/classroom/classroom-notice.ts": "25b570baf02bc9d1be50b331306abb5a428d3859080d28c96d9878756bd66513",
     "app/src/features/classroom/ItemSheet.svelte": "560db00a50f852e72d5e59bf7fc97caeabbd01326b771fe424926128415757f9",
     "app/src/features/classroom/notice-resource.svelte.ts": "a79638e18d9c95ca783c3706fd5be3805b4a9aa10ce7e93e6ae00e59d80da5b0",
-    "app/src/features/classroom/Notices.svelte": "aedaf2bdd2414d259f9b3081470d2a10a0be8863671829f85e0f821c6a020136",
+    "app/src/features/classroom/Notices.svelte": "7c469421a352ff982a4809c4e5245dc759dc75a6b1b7f271601100975164225a",
     "app/src/features/classroom/NoticeSheet.svelte": "8f1b3b0ddfadb4fdfca576696d367ed1867ca5075c674ffdf523ecd0d892a675",
     "app/src/features/classroom/submission.svelte.ts": "3aec992773a3eedc553b765f5a12e8cb42e6dc446d5416c50f744a16c34ee22f",
     "app/src/features/classroom/SubmissionProgress.svelte": "d253e46997daea2c5c298f053cacdf40603f73042cd1ddace60d36dfe086c1f9",
     "app/src/features/classroom/SubmitSheet.svelte": "e038a80d496dbbc705cf54c89817929ed4eedbee53f54307484110131fcb1c67",
-    "app/src/features/files/download-state.svelte.ts": "df461a1a3a718ca25cb51d5f95a0631ad559bf76dca0dd3e73dc10e1632e605d",
+    "app/src/features/files/download-state.svelte.ts": "2d6208f04155723e74fc153f70b936a9c9b568cddcacfacd42d99913b13d6ae0",
     "app/src/features/files/DownloadIcon.svelte": "8f1717c6fa0dc4ffd3bcd8141422a9369b4ffb77cb990dc786fc47bddd8c410d",
-    "app/src/features/files/Downloads.svelte": "75c7dfed837d0e1395d7209974adf6f6910e5cabbc8a08c4a700cc8b870c8e5d",
-    "app/src/features/files/FileList.svelte": "a266046b17094a8fcfbdeeaa5f16da764bd9beb7dd8e8d7746d772c0c4ce175e",
+    "app/src/features/files/Downloads.svelte": "9a81a47aed2bac4e080e5ae7ed606fc131ab078902105ee791c1fd42de34b0fd",
+    "app/src/features/files/FileList.svelte": "71edd378e0f3c9b98b675d3eb782323ce83d3b5521f860e9d120192de1387b25",
     "app/src/features/meals/meal-resource.svelte.ts": "3a04d0c45971ebe3d528bde943308263ca08454036fdc06e951ebb7d37dd2021",
     "app/src/features/meals/meals.ts": "4c949c4d6b05380a21e479d1869b58233a25c0dfdb1b61e98c4e0e31c091ba7e",
     "app/src/features/notifications/background.svelte.ts": "09cca8615968c69b1f1e80d63b60d5caf9d7cf9df3aff9cd028e03a769900fcc",
@@ -163,6 +163,6 @@
     "docs/user-guide.md": "c86aa52cb330e83debc54d25e0124e58c2faf06d5c7d5a1c9ae7a68283632e39",
     "LICENSE": "d8a6cc31abc16b6748c7a21f21611f5a1ec33f67d22ca23d7da1c19b95496bee",
     "README.md": "0796e1791a008acd4230615092ba154beda57ef821c9f35d87cce96a7735d4fb",
-    "RELEASE_NOTES.md": "07dd4e1cd192a67f4429a80dc304b032fbab8ea29dfbc529e7d411d30475cc79"
+    "RELEASE_NOTES.md": "4acfa91ce120cf9e68a81fa06815cc7f38feb8041cb45d395e633ec278abacbc"
   }
 }
